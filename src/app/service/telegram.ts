@@ -9,6 +9,8 @@ import {
   ArtusApplication,
 } from '@artus/core';
 
+import ITelegramClient from '../plugins/plugin-telegram/src/client';
+
 @Injectable()
 export default class JinshiService {
   @Inject(ArtusInjectEnum.Application)
@@ -18,7 +20,7 @@ export default class JinshiService {
   config: any;
 
   @Inject('ARTUS_TELEGRAM')
-  telegramClient: any;
+  telegramClient: ITelegramClient;
 
   get telegram() {
     return this.telegramClient.getClient() as TelegramClient;

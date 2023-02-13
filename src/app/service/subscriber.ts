@@ -7,13 +7,15 @@ import {
 import { Sequelize } from 'sequelize-typescript';
 import { Subscriber } from '../model/subscriber';
 
+import ISequelizeClient from '../plugins/plugin-sequelize/src/client';
+
 @Injectable()
 export default class SubscriberService {
   @Inject(ArtusInjectEnum.Application)
   app: ArtusApplication;
 
   @Inject('ARTUS_SEQUELIZE')
-  sequelizeClient: any;
+  sequelizeClient: ISequelizeClient;
 
   get sequelize() {
     const sequelize: Sequelize = this.sequelizeClient.getClient();

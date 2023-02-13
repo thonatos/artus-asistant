@@ -14,6 +14,9 @@ import {
 
 import JinshiService from '../service/jinshi';
 
+import IPPTRClient from '../plugins/plugin-pptr/src/client';
+import ITelegramClient from '../plugins/plugin-telegram/src/client';
+
 export const eventEmitter = new EventEmitter();
 
 @LifecycleHookUnit()
@@ -22,10 +25,10 @@ export default class CustomLifecycle implements ApplicationLifecycle {
   app: ArtusApplication;
 
   @Inject('ARTUS_PPTR')
-  pptrClient: any;
+  pptrClient: IPPTRClient;
 
   @Inject('ARTUS_TELEGRAM')
-  telegramClient: any;
+  telegramClient: ITelegramClient;
 
   get pptr() {
     return this.pptr.getClient() as Browser;

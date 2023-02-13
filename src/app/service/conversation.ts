@@ -8,13 +8,15 @@ import { Sequelize } from 'sequelize-typescript';
 import { Conversation } from '../model/conversation';
 import OpenAIService from './openai';
 
+import ISequelizeClient from '../plugins/plugin-sequelize/src/client';
+
 @Injectable()
 export default class ConversationService {
   @Inject(ArtusInjectEnum.Application)
   app: ArtusApplication;
 
   @Inject('ARTUS_SEQUELIZE')
-  sequelizeClient: any;
+  sequelizeClient: ISequelizeClient;
 
   @Inject(OpenAIService)
   openaiService: OpenAIService;

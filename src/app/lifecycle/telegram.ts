@@ -20,6 +20,8 @@ import SubscriberService from '../service/subscriber';
 import ConversationService from '../service/conversation';
 import AdministratorService from '../service/administrator';
 
+import ITelegramClient from '../plugins/plugin-telegram/src/client';
+
 export const eventEmitter = new EventEmitter();
 
 @LifecycleHookUnit()
@@ -31,7 +33,7 @@ export default class CustomLifecycle implements ApplicationLifecycle {
   trigger: EventTrigger;
 
   @Inject('ARTUS_TELEGRAM')
-  telegramClient: any;
+  telegramClient: ITelegramClient;
 
   get telegram() {
     return this.telegramClient.getClient() as TelegramClient;

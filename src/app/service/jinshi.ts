@@ -10,6 +10,8 @@ import { Redis } from 'ioredis';
 import PPTRService from './pptr';
 import TelegramService from './telegram';
 
+import IRedisClient from '../plugins/plugin-redis/src/client';
+
 @Injectable()
 export default class JinshiService {
   @Inject(ArtusInjectEnum.Application)
@@ -19,7 +21,7 @@ export default class JinshiService {
   config: any;
 
   @Inject('ARTUS_REDIS')
-  redisClient: any;
+  redisClient: IRedisClient;
 
   @Inject(PPTRService)
   pptrService: PPTRService;

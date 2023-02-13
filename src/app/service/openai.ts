@@ -13,13 +13,15 @@ import {
 } from '../constants';
 import Conversation from '../model/conversation';
 
+import IOpenaiClient from '../plugins/plugin-openai/src/client';
+
 @Injectable()
 export default class OpenAIService {
   @Inject(ArtusInjectEnum.Application)
   app: ArtusApplication;
 
   @Inject('ARTUS_OPENAI')
-  openaiClient: any;
+  openaiClient: IOpenaiClient;
 
   get httpsAgent() {
     const httpsAgent = this.openaiClient.getHttpsAgent();

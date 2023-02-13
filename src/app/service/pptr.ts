@@ -7,6 +7,9 @@ import {
 
 import { KnownDevices } from 'puppeteer';
 import { Browser } from 'puppeteer';
+
+import IPPTRClient from '../plugins/plugin-pptr/src/client';
+
 const iPhone13Pro = KnownDevices['iPhone 13 Pro Max'];
 
 @Injectable()
@@ -15,7 +18,7 @@ export default class PPTRService {
   app: ArtusApplication;
 
   @Inject('ARTUS_PPTR')
-  pptrClient: any;
+  pptrClient: IPPTRClient;
 
   get pptr() {
     const pptr: Browser = this.pptrClient.getClient();
