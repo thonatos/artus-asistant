@@ -9,5 +9,3 @@ yarn.lock
 yarn-error.log
 pnpm-lock.yaml
 package-lock.json
-ecosystem.config.js
-nohup.out

@@ -13,7 +13,7 @@ import {
 } from '../constants';
 import Conversation from '../model/conversation';
 
-import IOpenaiClient from '../plugins/plugin-openai/src/client';
+import IOpenAIClient from '../plugins/plugin-openai/src/client';
 
 @Injectable()
 export default class OpenAIService {
@@ -21,7 +21,7 @@ export default class OpenAIService {
   app: ArtusApplication;
 
   @Inject('ARTUS_OPENAI')
-  openaiClient: IOpenaiClient;
+  openaiClient: IOpenAIClient;
 
   get httpsAgent() {
     const httpsAgent = this.openaiClient.getHttpsAgent();

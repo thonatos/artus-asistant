@@ -5,7 +5,6 @@ import {
   ArtusApplication,
 } from '@artus/core';
 import dayjs from 'dayjs';
-import { Redis } from 'ioredis';
 
 import PPTRService from './pptr';
 import TelegramService from './telegram';
@@ -30,7 +29,7 @@ export default class JinshiService {
   telegramService: TelegramService;
 
   get redis() {
-    return this.redisClient.getClient() as Redis;
+    return this.redisClient.getClient();
   }
 
   get channel() {

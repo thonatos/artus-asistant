@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import { createHash } from 'node:crypto';
-import { TelegramClient } from 'telegram';
+
 import {
   Inject,
   Injectable,
@@ -23,7 +23,7 @@ export default class JinshiService {
   telegramClient: ITelegramClient;
 
   get telegram() {
-    return this.telegramClient.getClient() as TelegramClient;
+    return this.telegramClient.getClient();
   }
 
   async notify(to: string, data?: any, clear?: boolean) {
@@ -52,7 +52,7 @@ export default class JinshiService {
     });
 
     if (thumb) {
-      // fs.rmSync(thumb, { force: true });
+      fs.rmSync(thumb, { force: true });
     }
 
     if (!clear) {

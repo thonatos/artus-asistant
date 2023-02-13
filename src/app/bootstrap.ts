@@ -8,7 +8,7 @@ export async function start(options: any = {}) {
     configDir: 'config',
     extensions: ['.ts'],
     framework: options.framework || { path: __dirname },
-    exclude: options.exclude || ['bin', 'test', 'coverage'],
+    exclude: options.exclude || ['bin', 'test', 'coverage', 'src'],
   });
 
   const baseDir = options.baseDir || process.cwd();

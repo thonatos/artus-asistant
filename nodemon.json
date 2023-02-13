@@ -1,6 +1,0 @@
-{
-  "verbose": false,
-  "watch": ["src/**/*.ts"],
-  "ignore": ["dist", "node_modules", ".cache", "*.test.js", "**/fixtures/**"],
-  "exec": "ts-node ./src/index.ts"
-}

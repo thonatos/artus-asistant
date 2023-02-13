@@ -1,7 +1,5 @@
 import { EventEmitter } from 'events';
 import { CronJob } from 'cron';
-import { Browser } from 'puppeteer';
-import { TelegramClient } from 'telegram';
 
 import {
   Inject,
@@ -31,11 +29,11 @@ export default class CustomLifecycle implements ApplicationLifecycle {
   telegramClient: ITelegramClient;
 
   get pptr() {
-    return this.pptr.getClient() as Browser;
+    return this.pptrClient.getClient();
   }
 
   get telegram() {
-    return this.telegramClient.getClient() as TelegramClient;
+    return this.telegramClient.getClient();
   }
 
   @LifecycleHook()

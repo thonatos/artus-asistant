@@ -9,7 +9,6 @@ import {
   ApplicationLifecycle,
 } from '@artus/core';
 import { Input } from '@artus/pipeline';
-import { TelegramClient } from 'telegram';
 import { NewMessage, NewMessageEvent } from 'telegram/events';
 
 import EventTrigger from '../trigger/event';
@@ -36,7 +35,7 @@ export default class CustomLifecycle implements ApplicationLifecycle {
   telegramClient: ITelegramClient;
 
   get telegram() {
-    return this.telegramClient.getClient() as TelegramClient;
+    return this.telegramClient.getClient();
   }
 
   @LifecycleHook()
