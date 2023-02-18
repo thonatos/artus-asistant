@@ -1,19 +1,21 @@
+import { OpenAIApi } from 'openai';
+
 import {
   Inject,
   Injectable,
   ArtusInjectEnum,
   ArtusApplication,
 } from '@artus/core';
-import { OpenAIApi } from 'openai';
+
 import {
   CONVERSATION_ROLE,
   DEFAULT_COMPLETION,
   DEFAULT_CONVERSATION_PREFIX,
   DEFAULT_CONVERSATION_SUFFIX,
 } from '../constants';
-import Conversation from '../model/conversation';
 
-import IOpenAIClient from '../plugins/plugin-openai/src/client';
+import { IOpenAIClient } from '../plugin';
+import { ConversationModel } from '../model/conversation';
 
 @Injectable()
 export default class OpenAIService {
@@ -102,4 +104,4 @@ export default class OpenAIService {
   }
 }
 
-type Promot = Pick<Conversation, 'chat_id' | 'role' | 'content'>;
+type Promot = Pick<ConversationModel, 'chat_id' | 'role' | 'content'>;

@@ -5,10 +5,8 @@ import {
   ArtusApplication,
 } from '@artus/core';
 
-import { KnownDevices } from 'puppeteer';
-import { Browser } from 'puppeteer';
-
-import IPPTRClient from '../plugins/plugin-pptr/src/client';
+import { Browser, KnownDevices } from 'puppeteer';
+import { IPPTRClient } from '../plugin';
 
 const iPhone13Pro = KnownDevices['iPhone 13 Pro Max'];
 

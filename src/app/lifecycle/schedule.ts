@@ -1,5 +1,5 @@
-import { EventEmitter } from 'events';
 import { CronJob } from 'cron';
+import { EventEmitter } from 'events';
 
 import {
   Inject,
@@ -8,19 +8,21 @@ import {
   LifecycleHook,
   LifecycleHookUnit,
   ApplicationLifecycle,
+  Logger,
 } from '@artus/core';
 
+import { IPPTRClient, ITelegramClient } from '../plugin';
 import JinshiService from '../service/jinshi';
-
-import IPPTRClient from '../plugins/plugin-pptr/src/client';
-import ITelegramClient from '../plugins/plugin-telegram/src/client';
 
 export const eventEmitter = new EventEmitter();
 
 @LifecycleHookUnit()
-export default class CustomLifecycle implements ApplicationLifecycle {
+export default class ScheduleLifecycle implements ApplicationLifecycle {
   @Inject(ArtusInjectEnum.Application)
   app: ArtusApplication;
+
+  @Inject()
+  private logger!: Logger;
 
   @Inject('ARTUS_PPTR')
   pptrClient: IPPTRClient;
@@ -36,17 +38,19 @@ export default class CustomLifecycle implements ApplicationLifecycle {
     return this.telegramClient.getClient();
   }
 
+  get jinshiService(): JinshiService {
+    return this.app.container.get(JinshiService);
+  }
+
   @LifecycleHook()
   didReady() {
-    const jinshiService = this.app.container.get(JinshiService);
-
     const cronTimeNews = '*/30 * * * * *';
-    console.log('schedule:cronTimeNews', cronTimeNews);
+    this.logger.info('schedule:cronTimeNews', cronTimeNews);
 
     const scheduleNews = new CronJob(
       cronTimeNews,
       async () => {
-        jinshiService.fetchNews();
+        this.jinshiService.fetchNews();
       },
       null,
       true,
@@ -55,12 +59,12 @@ export default class CustomLifecycle implements ApplicationLifecycle {
     scheduleNews.start();
 
     const cronTimeRili = '0 9 * * *';
-    console.log('schedule:cronTimeRili', cronTimeRili);
+    this.logger.info('schedule:cronTimeRili', cronTimeRili);
 
     const scheduleRili = new CronJob(
       cronTimeRili,
       async () => {
-        jinshiService.fetchRili();
+        this.jinshiService.fetchRili();
       },
 
       null,

@@ -5,9 +5,9 @@ import {
   ArtusApplication,
 } from '@artus/core';
 import { Sequelize } from 'sequelize-typescript';
-import { Administrator } from '../model/administrator';
 
-import ISequelizeClient from '../plugins/plugin-sequelize/src/client';
+import { ISequelizeClient } from '../plugin';
+import { AdministratorModel } from '../model/administrator';
 
 @Injectable()
 export default class AdministratorService {
@@ -23,7 +23,8 @@ export default class AdministratorService {
   }
 
   get administrator() {
-    const administratorRepository = this.sequelize.getRepository(Administrator);
+    const administratorRepository =
+      this.sequelize.getRepository(AdministratorModel);
     return administratorRepository;
   }
 

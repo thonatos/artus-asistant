@@ -11,7 +11,7 @@ import {
   ArtusApplication,
 } from '@artus/core';
 
-import ITelegramClient from '../plugins/plugin-telegram/src/client';
+import { ITelegramClient } from '../plugin';
 
 @Injectable()
 export default class JinshiService {
@@ -43,7 +43,7 @@ export default class JinshiService {
       const hash = createHash('sha256');
       const digest = hash.update(buff).digest('hex');
 
-      const fileBuf = await sharp(buff).resize(600).toBuffer();
+      const fileBuf = await sharp(buff).resize(800).toBuffer();
 
       const thumbBuff = await sharp(buff)
         .resize({

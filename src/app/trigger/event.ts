@@ -1,5 +1,6 @@
 import { Injectable, ScopeEnum, Trigger } from '@artus/core';
 import { Context, Next } from '@artus/pipeline';
+import { NewMessageEvent } from 'telegram/events';
 
 @Injectable({ scope: ScopeEnum.SINGLETON })
 export default class EventTrigger extends Trigger {
@@ -25,4 +26,8 @@ export default class EventTrigger extends Trigger {
 
     payload?.callback && payload?.callback(result, type, payload);
   }
+}
+
+export interface EventMessagePayload {
+  event: NewMessageEvent;
 }

@@ -12,7 +12,7 @@ import {
   timestamps: true,
   paranoid: false,
 })
-export class Subscriber extends Model {
+export class SubscriberModel extends Model {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
@@ -45,4 +45,4 @@ export class Subscriber extends Model {
   updated_at: Date;
 }
 
-export default Subscriber;
+export default SubscriberModel;

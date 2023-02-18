@@ -12,7 +12,7 @@ import {
   timestamps: true,
   paranoid: false,
 })
-export class Administrator extends Model {
+export class AdministratorModel extends Model {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
@@ -39,4 +39,4 @@ export class Administrator extends Model {
   updated_at: Date;
 }
 
-export default Administrator;
+export default AdministratorModel;

@@ -1,5 +1,5 @@
 {
-  "name": "artus-media",
+  "name": "artus-asistant",
   "version": "1.0.0",
   "description": "Telegram Bot / OpenAI Asistant powered by artus.",
   "main": "dist/index.js",

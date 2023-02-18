@@ -4,10 +4,10 @@ import {
   ArtusInjectEnum,
   ArtusApplication,
 } from '@artus/core';
-import { Sequelize } from 'sequelize-typescript';
-import { Subscriber } from '../model/subscriber';
 
-import ISequelizeClient from '../plugins/plugin-sequelize/src/client';
+import { Sequelize } from 'sequelize-typescript';
+import { ISequelizeClient } from '../plugin';
+import { SubscriberModel } from '../model/subscriber';
 
 @Injectable()
 export default class SubscriberService {
@@ -23,7 +23,7 @@ export default class SubscriberService {
   }
 
   get subscriber() {
-    const subscriberRepository = this.sequelize.getRepository(Subscriber);
+    const subscriberRepository = this.sequelize.getRepository(SubscriberModel);
     return subscriberRepository;
   }
 

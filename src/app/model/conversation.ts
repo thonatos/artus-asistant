@@ -12,7 +12,7 @@ import {
   timestamps: true,
   paranoid: false,
 })
-export class Conversation extends Model {
+export class ConversationModel extends Model {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
@@ -36,4 +36,4 @@ export class Conversation extends Model {
   updated_at: Date;
 }
 
-export default Conversation;
+export default ConversationModel;

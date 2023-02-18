@@ -1,9 +1,8 @@
 import { Context, Next } from '@artus/pipeline';
-import { Api } from 'telegram';
+import { EventMessagePayload } from '../trigger/event';
 
 export default async function checkMessageType(ctx: Context, next: Next) {
   const { type, payload } = ctx.input.params;
-  const message = payload?.message as Api.Message;
 
   const {
     out,
@@ -13,7 +12,7 @@ export default async function checkMessageType(ctx: Context, next: Next) {
     chatId,
     id: messageId,
     message: messageContent,
-  } = message;
+  } = (payload as EventMessagePayload)?.event.message;
 
   if (type !== 'message' || isGroup || isChannel || !isPrivate || out) {
     await next();

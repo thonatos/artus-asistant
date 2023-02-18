@@ -1,4 +1,4 @@
-# artus-media
+# artus-asistant
 
 > Telegram Bot / OpenAI Asistant powered by artus.
 
@@ -37,7 +37,6 @@ REDIS_PORT = 6379
 REDIS_USERNAME = ''
 REDIS_PASSWORD = ''
 REDIS_DATABASE = 0
-
 
 # openai
 OPENAI_KEY = "key"

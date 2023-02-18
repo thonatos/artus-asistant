@@ -5,21 +5,21 @@ import {
   ArtusApplication,
 } from '@artus/core';
 import { Sequelize } from 'sequelize-typescript';
-import { Conversation } from '../model/conversation';
-import OpenAIService from './openai';
 
-import ISequelizeClient from '../plugins/plugin-sequelize/src/client';
+import { ISequelizeClient } from '../plugin';
+import { ConversationModel } from '../model/conversation';
+import OpenAIService from './openai';
 
 @Injectable()
 export default class ConversationService {
   @Inject(ArtusInjectEnum.Application)
   app: ArtusApplication;
 
-  @Inject('ARTUS_SEQUELIZE')
-  sequelizeClient: ISequelizeClient;
-
   @Inject(OpenAIService)
   openaiService: OpenAIService;
+
+  @Inject('ARTUS_SEQUELIZE')
+  sequelizeClient: ISequelizeClient;
 
   get sequelize() {
     const sequelize: Sequelize = this.sequelizeClient.getClient();
@@ -27,7 +27,8 @@ export default class ConversationService {
   }
 
   get conversation() {
-    const conversationRepository = this.sequelize.getRepository(Conversation);
+    const conversationRepository =
+      this.sequelize.getRepository(ConversationModel);
     return conversationRepository;
   }
 
@@ -51,7 +52,7 @@ export default class ConversationService {
     return data;
   }
 
-  async saveConversation(conversations: Conversation[]) {
+  async saveConversation(conversations: ConversationModel[]) {
     const items = conversations.map((item) => {
       return {
         chat_id: item.chat_id,
@@ -71,7 +72,7 @@ export default class ConversationService {
       _conversations
     );
 
-    await this.saveConversation(conversations as Conversation[]);
+    await this.saveConversation(conversations as ConversationModel[]);
 
     return output;
   }

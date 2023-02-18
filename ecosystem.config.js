@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'artus-media',
+      name: 'artus-asistant',
       script: './dist/index.js',
       watch: false,
       ignore_watch: ['node_modules', '.cache', 'src'],

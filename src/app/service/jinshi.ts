@@ -1,15 +1,16 @@
+import dayjs from 'dayjs';
+
 import {
   Inject,
   Injectable,
   ArtusInjectEnum,
   ArtusApplication,
+  Logger,
 } from '@artus/core';
-import dayjs from 'dayjs';
 
+import { IRedisClient } from '../plugin';
 import PPTRService from './pptr';
 import TelegramService from './telegram';
-
-import IRedisClient from '../plugins/plugin-redis/src/client';
 
 @Injectable()
 export default class JinshiService {
@@ -19,14 +20,17 @@ export default class JinshiService {
   @Inject(ArtusInjectEnum.Config)
   config: any;
 
+  @Inject()
+  private logger!: Logger;
+
+  @Inject(TelegramService)
+  telegramService: TelegramService;
+
   @Inject('ARTUS_REDIS')
   redisClient: IRedisClient;
 
   @Inject(PPTRService)
   pptrService: PPTRService;
-
-  @Inject(TelegramService)
-  telegramService: TelegramService;
 
   get redis() {
     return this.redisClient.getClient();
@@ -41,7 +45,7 @@ export default class JinshiService {
 
     const rili = await this.pptrService.fetchRili();
 
-    console.log('fetchRili:news', rili?.url);
+    this.logger.info('jinshiService:fetchRili:news', rili?.url);
 
     if (!rili?.riliThumb) {
       return;
@@ -61,7 +65,7 @@ export default class JinshiService {
     const targetChannel = this.channel;
 
     const news = (await this.pptrService.fetchNews()) || [];
-    console.log('fetchNews:news', news.length);
+    this.logger.info('jinshiService:fetchNews:news', news.length);
 
     await Promise.all(
       news.map(async (item) => {
@@ -118,7 +122,7 @@ export default class JinshiService {
             thumb: detail.thumb,
           });
         } catch (error) {
-          console.log('schedule:error', error);
+          this.logger.info('jinshiService:fetchNews:error', error);
         }
       })
     );
