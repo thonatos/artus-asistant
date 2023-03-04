@@ -40,6 +40,7 @@ REDIS_DATABASE = 0
 
 # openai
 OPENAI_KEY = "key"
+OPENAI_PROXY = "socks://127.0.0.1:1080"
 ```
 
 ### Development
