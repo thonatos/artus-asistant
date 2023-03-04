@@ -66,7 +66,7 @@ export default class ConversationService {
 
   async handleConversation(chatId: string, message: string) {
     const _conversations = await this.queryConversations(chatId);
-    const { output, conversations } = await this.openaiService.sendMessage(
+    const { output, conversations } = await this.openaiService.sendChat(
       chatId,
       message,
       _conversations

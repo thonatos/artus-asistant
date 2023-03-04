@@ -5,13 +5,14 @@ import {
   Injectable,
   ArtusInjectEnum,
   ArtusApplication,
+  Logger,
 } from '@artus/core';
 
 import {
+  ROLE_MAP,
+  CHAT_ROLE,
   CONVERSATION_ROLE,
-  DEFAULT_COMPLETION,
-  DEFAULT_CONVERSATION_PREFIX,
-  DEFAULT_CONVERSATION_SUFFIX,
+  DEFAULT_CHAT_PREFIX,
 } from '../constants';
 
 import { IOpenAIClient } from '../plugin';
@@ -21,6 +22,9 @@ import { ConversationModel } from '../model/conversation';
 export default class OpenAIService {
   @Inject(ArtusInjectEnum.Application)
   app: ArtusApplication;
+
+  @Inject()
+  private logger!: Logger;
 
   @Inject('ARTUS_OPENAI')
   openaiClient: IOpenAIClient;
@@ -35,19 +39,7 @@ export default class OpenAIService {
     return openai;
   }
 
-  async getPrompt(conversations: Promot[]) {
-    const conversation = conversations
-      .concat(DEFAULT_CONVERSATION_SUFFIX)
-      .reduce((acc, item) => {
-        return `${acc}\n${item.role}: ${item.content}`;
-      }, '');
-
-    const prompt = [DEFAULT_CONVERSATION_PREFIX, conversation].join('\n\n');
-
-    return prompt;
-  }
-
-  async genConversation(
+  async formatMessage(
     chatId: string,
     message: string,
     role: CONVERSATION_ROLE
@@ -59,24 +51,36 @@ export default class OpenAIService {
     };
   }
 
-  async sendMessage(chatId: string, input: string, conversations: Promot[]) {
+  async getChat(conversations: Promot[]) {
+    const messages = conversations.map((item) => {
+      const role: CHAT_ROLE = ROLE_MAP[item.role];
+
+      return {
+        role,
+        content: item.content,
+      };
+    });
+    return messages;
+  }
+
+  async sendChat(chatId: string, input: string, conversations: Promot[]) {
     try {
-      const inputConversation = await this.genConversation(
+      const inputMessage = await this.formatMessage(
         chatId,
         input,
-        CONVERSATION_ROLE.Human
+        CONVERSATION_ROLE.HUMAN
       );
 
-      const prompt = await this.getPrompt([
+      const messages = await this.getChat([
+        DEFAULT_CHAT_PREFIX,
         ...conversations,
-        inputConversation,
+        inputMessage,
       ]);
 
-      const completion = await this.openai.createCompletion(
+      const completion = await this.openai.createChatCompletion(
         {
-          ...DEFAULT_COMPLETION,
-          prompt,
-          user: chatId,
+          model: 'gpt-3.5-turbo',
+          messages,
         },
         {
           httpsAgent: this.httpsAgent,
@@ -84,8 +88,8 @@ export default class OpenAIService {
         }
       );
 
-      const output = completion.data.choices[0].text || '';
-      const outputConversation = await this.genConversation(
+      const output = completion.data.choices[0].message?.content || '';
+      const outputMessage = await this.formatMessage(
         chatId,
         output,
         CONVERSATION_ROLE.AI
@@ -93,9 +97,10 @@ export default class OpenAIService {
 
       return {
         output,
-        conversations: [inputConversation, outputConversation],
+        conversations: [inputMessage, outputMessage],
       };
     } catch (error) {
+      this.logger.error(error);
       return {
         output: '',
         conversations: [],

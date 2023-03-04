@@ -1,24 +1,23 @@
 export enum CONVERSATION_ROLE {
-  Human = 'Human',
   AI = 'AI',
+  HUMAN = 'Human',
+  SYSTEM = 'System',
 }
 
-export const DEFAULT_CONVERSATION_PREFIX =
-  'The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.';
+export enum CHAT_ROLE {
+  USER = 'user',
+  SYSTEM = 'system',
+  ASSISTANT = 'assistant',
+}
 
-export const DEFAULT_CONVERSATION_SUFFIX = {
-  role: CONVERSATION_ROLE.AI,
-  content: '',
-  chat_id: '',
+export const ROLE_MAP = {
+  [CONVERSATION_ROLE.AI]: CHAT_ROLE.ASSISTANT,
+  [CONVERSATION_ROLE.HUMAN]: CHAT_ROLE.USER,
+  [CONVERSATION_ROLE.SYSTEM]: CHAT_ROLE.SYSTEM,
 };
 
-export const DEFAULT_COMPLETION = {
-  model: 'text-davinci-003',
-  prompt: '',
-  temperature: 0.9,
-  max_tokens: 2048,
-  top_p: 1,
-  frequency_penalty: 0.0,
-  presence_penalty: 0.6,
-  stop: [' Human:', ' AI:'],
+export const DEFAULT_CHAT_PREFIX = {
+  role: CONVERSATION_ROLE.SYSTEM,
+  content: 'You are a helpful assistant.',
+  chat_id: '',
 };
